@@ -12,8 +12,8 @@ using WOB.Data;
 namespace WOB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231030211857_CreateDbver1")]
-    partial class CreateDbver1
+    [Migration("20231102032431_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,10 +38,6 @@ namespace WOB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -98,9 +94,6 @@ namespace WOB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.HasKey("StaffId");
 
                     b.ToTable("staffs");
@@ -132,7 +125,6 @@ namespace WOB.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<int?>("CoachId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Mail")
@@ -143,7 +135,6 @@ namespace WOB.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("StaffId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Tel")
@@ -198,9 +189,7 @@ namespace WOB.Migrations
                 {
                     b.HasOne("WOB.Models.Coach", "Coach")
                         .WithMany()
-                        .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CoachId");
 
                     b.HasOne("WOB.Models.Player", "Player")
                         .WithMany()
@@ -208,9 +197,7 @@ namespace WOB.Migrations
 
                     b.HasOne("WOB.Models.Staff", "Staff")
                         .WithMany()
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StaffId");
 
                     b.HasOne("WOB.Models.UserCode", "UserCode")
                         .WithMany()

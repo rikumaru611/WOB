@@ -8,10 +8,6 @@ namespace WOB.Models
         [Key]
         public int StaffId { get; set; }
         public string FirstName { get; set; }
-        public string LastName { get; set; }
-
-        [ForeignKey("Role")]
-        public int RoleId { get; set; }
-
+        public string LastName { get; set; }        
     }
 }
