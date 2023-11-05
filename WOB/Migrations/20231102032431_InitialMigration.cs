@@ -5,7 +5,7 @@
 namespace WOB.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDbver1 : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,8 +17,7 @@ namespace WOB.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,8 +31,7 @@ namespace WOB.Migrations
                     StaffId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,8 +95,8 @@ namespace WOB.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserCodeId = table.Column<int>(type: "int", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: true),
-                    CoachId = table.Column<int>(type: "int", nullable: false),
-                    StaffId = table.Column<int>(type: "int", nullable: false),
+                    CoachId = table.Column<int>(type: "int", nullable: true),
+                    StaffId = table.Column<int>(type: "int", nullable: true),
                     Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tel = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -109,8 +107,7 @@ namespace WOB.Migrations
                         name: "FK_users_coaches_CoachId",
                         column: x => x.CoachId,
                         principalTable: "coaches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_users_players_Number",
                         column: x => x.Number,
@@ -120,8 +117,7 @@ namespace WOB.Migrations
                         name: "FK_users_staffs_StaffId",
                         column: x => x.StaffId,
                         principalTable: "staffs",
-                        principalColumn: "StaffId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "StaffId");
                     table.ForeignKey(
                         name: "FK_users_userCodes_UserCodeId",
                         column: x => x.UserCodeId,
