@@ -51,6 +51,8 @@ namespace WOB.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
+            ViewBag.EventTypes = new SelectList(_context.eventTypes, "Id", "TypeName");
+
             return View();
         }
 
