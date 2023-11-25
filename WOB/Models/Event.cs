@@ -26,6 +26,9 @@ namespace WOB.Models
 
         public Boolean Valid { get; set; }
         
-        public EventType Type { get; set; }
+        public EventType? Type { get; set; }
+
+        // この1文でエラーでる
+        //public virtual List<EventType> EventTypes { get; set; }
     }
 }

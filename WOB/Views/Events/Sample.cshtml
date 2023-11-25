@@ -1,0 +1,83 @@
+﻿<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        flatpickr.l10ns.ja.firstDayOfWeek = 0;
+        flatpickr('#datetimepicker1', {
+            wrap: true,
+            dateFormat: 'Y/m/d',
+            locale: 'ja',
+            clickOpens: false,
+            allowInput: true,
+            monthSelectorType: 'static'
+        });
+
+        let now = new Date();
+        flatpickr('#datetimepicker2', {
+            wrap: true,
+            enableTime: true,
+            noCalendar: true,
+            defaultHour: now.getHours(),
+            defaultMinute: now.getMinutes(),
+            dateFormat: 'H:i',
+            minuteIncrement: 1,
+            locale: 'ja',
+            clickOpens: false,
+            allowInput: true,
+        });
+
+        flatpickr('#datetimepicker3', {
+            wrap: true,
+            enableTime: true,
+            dateFormat: 'Y/m/d H:i',
+            defaultHour: now.getHours(),
+            defaultMinute: now.getMinutes(),
+            minuteIncrement: 1,
+            locale: 'ja',
+            clickOpens: false,
+            allowInput: true,
+            monthSelectorType: 'static'
+        });
+    });
+</script>
+
+<div class="container">
+    <div class="col-md-3 py-4">
+        <form class="card p-4">
+            <div class="input-group date mb-3" id="datetimepicker1" data-target-input="nearest">
+                <label for="datetimepicker1" class="pt-2 pr-2">日付：</label>
+                <input type="text" data-input class="form-control" data-target="#datetimepicker1" style='background:white' />
+                <span class="input-group-text" data-toggle>
+                    <i class="far fa-calendar-alt"></i>
+                </span>
+            </div>
+            <div class="input-group date mb-3" id="datetimepicker2" data-target-input="nearest">
+                <label for="datetimepicker2" class="pt-2 pr-2">時刻：</label>
+                <input type="text" data-input class="form-control" data-target="#datetimepicker2" style='background:white' />
+                <span class="input-group-text" data-toggle>
+                    <i class="far fa-clock"></i>
+                </span>
+            </div>
+            <div class="input-group date mb-3" id="datetimepicker3" data-target-input="nearest">
+                <label for="datetimepicker3" class="pt-2 pr-2">日時：</label>
+                <input type="text" data-input class="form-control" data-target="#datetimepicker3" style='background:white' />
+                <span class="input-group-text" data-toggle>
+                    <i class="far fa-calendar-alt"></i>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+</script>

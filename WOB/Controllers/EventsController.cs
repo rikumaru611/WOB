@@ -23,11 +23,14 @@ namespace WOB.Controllers
         public async Task<IActionResult> Index()
         {
             var events = _context.events.Include(e => e.Type).ToList();
-            return View(events);
-            // default
-            //return _context.events != null ? 
-            //            View(await _context.events.ToListAsync()) :
-            //            Problem("Entity set 'ApplicationDbContext.events'  is null.");
+            ViewBag.Events = _context.eventTypes.ToList();
+            return View(events);            
+        }
+
+        [HttpGet]
+        public ActionResult Sample()
+        {            
+            return View();
         }
 
         // GET: Events/Details/5
@@ -61,8 +64,9 @@ namespace WOB.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,EventTypeId,Date,Time,Place,Description,Valid")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Name,EventTypeId,Type, Date,Time,Place,Description,Valid")] Event @event)
         {
+            var test = @event;
             if (ModelState.IsValid)
             {
                 _context.Add(@event);

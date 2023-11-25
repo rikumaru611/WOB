@@ -4,11 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Schedule</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<input type="date" id="start" value="2018-07-22" /> ~
+<input type="date" id="end" value="2018-07-23" />
+<button type="button">Today</button>
+<button type="button">Set</button>
+
+@* @Html.DropDownListFor(model => model., ViewBag.Events.Typename, "All", null); *@
+
+
 <table class="table">
     <thead>
         <tr>
