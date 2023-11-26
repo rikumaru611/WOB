@@ -57,8 +57,14 @@ namespace WOB.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DismissalTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("EventTypeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("MeetingTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -67,14 +73,12 @@ namespace WOB.Migrations
                     b.Property<string>("Place")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Time")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Valid")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventTypeId");
 
                     b.ToTable("events");
                 });
@@ -222,6 +226,17 @@ namespace WOB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("userCodes");
+                });
+
+            modelBuilder.Entity("WOB.Models.Event", b =>
+                {
+                    b.HasOne("WOB.Models.EventType", "Type")
+                        .WithMany()
+                        .HasForeignKey("EventTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("WOB.Models.Player", b =>

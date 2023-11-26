@@ -2,15 +2,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
-    <script src="~/js/flatpickr.min.js">
+    <script src="~/js/flatpickr.min.js"></script>
+    <script src="./js/l10n/ja.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
 </head>
 
 <script>
-
-
     document.addEventListener('DOMContentLoaded', function () {        
-        // flatpickr.l10ns.ja.firstDayOfWeek = 0;
+        flatpickr.l10ns.ja.firstDayOfWeek = 0;
         flatpickr('#datetimepicker1', {
             wrap: true,
             dateFormat: 'Y/m/d',
@@ -47,6 +46,7 @@
             monthSelectorType: 'static'
         });
     });
+
 </script>
 
 
@@ -88,18 +88,25 @@
                 </span>
             </div>
 
-
             <div>
-            <label asp-for="Time" class="control-label"></label>
-            <div class="input-group date mb-3" id="datetimepicker2">
-                <input asp-for="Time" type="text" data-input class="form-control" data-target="#datetimepicker2" style='background:white' />
-                <span class="input-group-text" data-toggle>                    
-                <i class="far fa-clock"></i>
-                </span>
-            </div>
 
-            </div>
+                <label asp-for="MeetingTime" class="control-label"></label>
+                <div class="input-group date mb-3" id="datetimepicker2">
+                    <input asp-for="MeetingTime" type="text" data-input class="form-control" data-target="#datetimepicker2" style='background:white' />
+                    <span class="input-group-text" data-toggle>
+                        <i class="far fa-clock"></i>
+                    </span>
+                </div>
 
+                <label asp-for="DismissalTime" class="control-label"></label>
+                <div class="input-group date mb-3" id="datetimepicker2">
+                    <input asp-for="DismissalTime" type="text" data-input class="form-control" data-target="#datetimepicker2" style='background:white' />
+                    <span class="input-group-text" data-toggle>
+                        <i class="far fa-clock"></i>
+                    </span>
+                </div>
+            </div>
+            
 
             <div class="form-group">
                 <label asp-for="Place" class="control-label"></label>
@@ -126,3 +133,26 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+    const eventtype = document.getElementById("eventtype");
+    eventtype.addEventListener("change", function (e) {
+        const name = document.getElementById("name");
+        switch (this.value) {
+            // GAME
+            case "1":
+                name.setAttribute('placeholder', 'vs Celtics');
+                break;
+            // MEETING
+            case "2":
+                name.setAttribute('placeholder', 'meeting');
+                break;
+            // TRNASFER
+            case "3":
+                name.setAttribute('placeholder', 'Bus');
+                break;
+            default:
+                name.setAttribute('placeholder', '')
+        }
+    })
+</script>

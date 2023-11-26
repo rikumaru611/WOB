@@ -12,8 +12,8 @@ using WOB.Data;
 namespace WOB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231105010121_AddEvent")]
-    partial class AddEvent
+    [Migration("20231125015438_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,8 @@ namespace WOB.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventTypeId");
 
                     b.ToTable("events");
                 });
@@ -225,6 +227,17 @@ namespace WOB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("userCodes");
+                });
+
+            modelBuilder.Entity("WOB.Models.Event", b =>
+                {
+                    b.HasOne("WOB.Models.EventType", "Type")
+                        .WithMany()
+                        .HasForeignKey("EventTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("WOB.Models.Player", b =>

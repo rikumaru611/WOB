@@ -18,7 +18,10 @@ namespace WOB.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
-        public string Time { get; set; }
+        [DataType(DataType.Time)]
+        public DateTime MeetingTime { get; set; }
+
+        public DateTime DismissalTime { get; set; }
 
         public string? Place { get; set; }
 
