@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Bogus.DataSets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,154 +21,36 @@ namespace WOB.Controllers
             _context = context;
         }
 
-        // GET: Events
-        public async Task<IActionResult> Index()
-        {
-            var events = _context.events.Include(e => e.Type).ToList();
-            ViewBag.Events = _context.eventTypes.ToList();
-            return View(events);            
-        }
-
+        /// <summary>
+        /// スケジュールを表示します
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult Sample()
+        public ActionResult Index()
         {            
             return View();
         }
 
-        // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+        /// <summary>
+        /// すべてのEventを取得します。
+        /// </summary>
+        /// <returns>戻り値はJson形式です。</returns>
+        public string? GetEvents()
         {
-            if (id == null || _context.events == null)
+            var events = _context.events;
+            List<EventViewModel> eventViewModels = new List<EventViewModel>();
+            if(events == null)
             {
-                return NotFound();
+                return null;
             }
-
-            var @event = await _context.events
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
+            else
             {
-                return NotFound();
-            }
-
-            return View(@event);
-        }
-
-        // GET: Events/Create
-        public IActionResult Create()
-        {
-            ViewBag.EventTypes = new SelectList(_context.eventTypes, "Id", "TypeName");
-
-            return View();
-        }
-
-        // POST: Events/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,EventTypeId,Type, Date,Time,Place,Description,Valid")] Event @event)
-        {
-            var test = @event;
-            if (ModelState.IsValid)
-            {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(@event);
-        }
-
-        // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.events == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await _context.events.FindAsync(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-            return View(@event);
-        }
-
-        // POST: Events/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,EventTypeId,Date,Time,Place,Description,Valid")] Event @event)
-        {
-            if (id != @event.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                foreach (var eve in events)
                 {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
+                    eventViewModels.Add(new EventViewModel(eve));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventExists(@event.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            return View(@event);
-        }
-
-        // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.events == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await _context.events
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
-        }
-
-        // POST: Events/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.events == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.events'  is null.");
-            }
-            var @event = await _context.events.FindAsync(id);
-            if (@event != null)
-            {
-                _context.events.Remove(@event);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool EventExists(int id)
-        {
-          return (_context.events?.Any(e => e.Id == id)).GetValueOrDefault();
+            return JsonSerializer.Serialize(eventViewModels);         
         }
     }
 }

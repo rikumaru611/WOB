@@ -9,29 +9,9 @@ namespace WOB.Models
     {
         [Key]
         public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        [ForeignKey(nameof(EventType))]
-        public int EventTypeId { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
-
-        [DataType(DataType.Time)]
-        public DateTime MeetingTime { get; set; }
-
-        public DateTime DismissalTime { get; set; }
-
-        public string? Place { get; set; }
-
-        public string? Description { get; set; }
-
-        public Boolean Valid { get; set; }
-        
-        public EventType? Type { get; set; }
-
-        // この1文でエラーでる
-        //public virtual List<EventType> EventTypes { get; set; }
+        public string Title { get; set; }
+        public string Desc { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }        
     }
 }

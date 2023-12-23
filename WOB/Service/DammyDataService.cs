@@ -30,7 +30,7 @@ namespace WOB.Service
             CreateUserRef(db);
 
             // Eventテーブルのダミーデータを作成する
-            CreateEvent(db);
+            // CreateEvent(db);
         }
 
         /// <summary>
@@ -192,23 +192,23 @@ namespace WOB.Service
         /// Eventテーブルを作成する
         /// </summary>
         /// <param name="_db"></param>
-        public static void CreateEvent(ApplicationDbContext db)
-        {
-            List<EventType> eventTypes = db.eventTypes.ToList();
-            var faker = new Faker<Event>()                
-                .RuleFor(e => e.Name, f => f.Lorem.Word())
-                .RuleFor(e => e.EventTypeId, f => f.PickRandom(eventTypes).Id)                
-                .RuleFor(e => e.Date, f => f.Date.Between(DateTime.Now, DateTime.Now.AddYears(1)))
-                .RuleFor(e => e.MeetingTime, f => f.Date.Between(DateTime.Now, DateTime.Now.AddMinutes(f.Random.Int())))
-                .RuleFor(e => e.DismissalTime, (f, e) => e.MeetingTime.AddMinutes(f.Random.Int()))
-                .RuleFor(e => e.Place, f => f.Lorem.Word())
-                .RuleFor(e => e.Description, f => f.Lorem.Letter())
-                .RuleFor(e => e.Valid, true)
-                ;
-            var events = faker.Generate(number);
-            db.events.AddRange(events);
-            db.SaveChanges();
-        }
+        //public static void CreateEvent(ApplicationDbContext db)
+        //{
+        //    List<EventType> eventTypes = db.eventTypes.ToList();
+        //    var faker = new Faker<Event>()                
+        //        .RuleFor(e => e.Name, f => f.Lorem.Word())
+        //        .RuleFor(e => e.EventTypeId, f => f.PickRandom(eventTypes).Id)                
+        //        .RuleFor(e => e.Date, f => f.Date.Between(DateTime.Now, DateTime.Now.AddYears(1)))
+        //        .RuleFor(e => e.MeetingTime, f => f.Date.Between(DateTime.Now, DateTime.Now.AddMinutes(f.Random.Int())))
+        //        .RuleFor(e => e.DismissalTime, (f, e) => e.MeetingTime.AddMinutes(f.Random.Int()))
+        //        .RuleFor(e => e.Place, f => f.Lorem.Word())
+        //        .RuleFor(e => e.Description, f => f.Lorem.Letter())
+        //        .RuleFor(e => e.Valid, true)
+        //        ;
+        //    var events = faker.Generate(number);
+        //    db.events.AddRange(events);
+        //    db.SaveChanges();
+        //}
 
     }
 }
