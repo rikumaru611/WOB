@@ -12,8 +12,8 @@ using WOB.Data;
 namespace WOB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231102220009_ChangePlayer")]
-    partial class ChangePlayer
+    [Migration("20231216023146_ChangeEvent2")]
+    partial class ChangeEvent2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,52 @@ namespace WOB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("coaches");
+                });
+
+            modelBuilder.Entity("WOB.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("End_Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Start_Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("events");
+                });
+
+            modelBuilder.Entity("WOB.Models.EventType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("eventTypes");
                 });
 
             modelBuilder.Entity("WOB.Models.Player", b =>

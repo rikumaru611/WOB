@@ -9,7 +9,7 @@ namespace WOB.Service
     /// </summary>
     public class DammyDataService
     {
-        const int number = 3;        
+        const int number = 3;                
 
         public static void InsertDammyData(ApplicationDbContext db)
         {
@@ -17,18 +17,20 @@ namespace WOB.Service
             CreateCoach(db);
 
             //// Staffテーブルのダミーデータを作成する
-            // CreateStaff(db);
+            CreateStaff(db);
 
             //// Playerテーブルのダミーデータを作成する
-            //CreatePlayer(db);
+            CreatePlayer(db);
 
             //// Userテーブルのダミーデータを作成する
-            //CreateUser(db);
+            CreateUser(db);
 
             // Userテーブルのダミーデータを作成する
             // RuleSetを使用した
-            //CreateUserRef(db);
+            CreateUserRef(db);
 
+            // Eventテーブルのダミーデータを作成する
+            // CreateEvent(db);
         }
 
         /// <summary>
@@ -51,7 +53,7 @@ namespace WOB.Service
             // 毎回同じ値を作成する
             var coachs = MakeCoach(1330);
             _db.coaches.AddRange(coachs);
-            _db.SaveChanges();
+            _db.SaveChanges();         
         }
 
         public static List<Staff> CreateStaff(ApplicationDbContext _db)
@@ -113,7 +115,7 @@ namespace WOB.Service
             {
                 var user = new Faker<User>()
                     .RuleFor(u => u.Mail, f => f.Internet.ExampleEmail())
-                    .RuleFor(u => u.Tel, f => f.Random.Replace("###-####-####").OrNull(f))
+                    .RuleFor(u => u.Tel, f => f.Random.Replace("###-####-####"))
                     .RuleFor(u => u.StaffId, f => id)
                     .RuleFor(u => u.UserCodeId, f => staffUserCodeId)
                     .RuleFor(u => u.CoachId, f => null);
@@ -128,6 +130,7 @@ namespace WOB.Service
                     .RuleFor(u => u.Tel, f => f.Random.Replace("###-####-####"))
                     .RuleFor(u => u.Number, f => id)
                     .RuleFor(u => u.UserCodeId, f => playerUserCodeId);
+                var users = user.Generate();
                 _db.users.AddRange(user.Generate());
             }
             _db.SaveChanges();
@@ -184,5 +187,28 @@ namespace WOB.Service
             }
             _db.SaveChanges();
         }
+
+        /// <summary>
+        /// Eventテーブルを作成する
+        /// </summary>
+        /// <param name="_db"></param>
+        //public static void CreateEvent(ApplicationDbContext db)
+        //{
+        //    List<EventType> eventTypes = db.eventTypes.ToList();
+        //    var faker = new Faker<Event>()                
+        //        .RuleFor(e => e.Name, f => f.Lorem.Word())
+        //        .RuleFor(e => e.EventTypeId, f => f.PickRandom(eventTypes).Id)                
+        //        .RuleFor(e => e.Date, f => f.Date.Between(DateTime.Now, DateTime.Now.AddYears(1)))
+        //        .RuleFor(e => e.MeetingTime, f => f.Date.Between(DateTime.Now, DateTime.Now.AddMinutes(f.Random.Int())))
+        //        .RuleFor(e => e.DismissalTime, (f, e) => e.MeetingTime.AddMinutes(f.Random.Int()))
+        //        .RuleFor(e => e.Place, f => f.Lorem.Word())
+        //        .RuleFor(e => e.Description, f => f.Lorem.Letter())
+        //        .RuleFor(e => e.Valid, true)
+        //        ;
+        //    var events = faker.Generate(number);
+        //    db.events.AddRange(events);
+        //    db.SaveChanges();
+        //}
+
     }
 }

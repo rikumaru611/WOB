@@ -32,5 +32,8 @@ namespace WOB.Data
         public DbSet<Status> statuses { get; set; }
         public DbSet<User> users { get; set;  }
         public DbSet<UserCode> userCodes { get; set; }
+        public DbSet<Event> events { get; set; }
+        public DbSet<EventType> eventTypes { get; set; }
+
     }
 }
